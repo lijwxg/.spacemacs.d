@@ -1,0 +1,10 @@
+* spacemacs的自定义配置
+** 参考资料
+   配置文件: [[https://github.com/zilongshanren/spacemacs-private][子龙山人的github仓库]]
+   
+   视频地址: [[http://v.youku.com/v_show/id_XMTUwNjU0MjE0OA==.html][子龙山人的 21天学习 Emacs，Spacemacs Rocks 第二季]]
+** 功能
+*** 保留个人常用配置
+    方便迁移
+*** TODO 自定义layer
+    将常用的包定义在layer中统一管理
