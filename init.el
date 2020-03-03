@@ -47,6 +47,9 @@ This function should only modify configuration layer settings."
      markdown
      multiple-cursors
      org
+     (plantuml :variables
+               plantuml-jar-path "~/.spacemacs.d/plantuml.jar"
+               org-plantuml-jar-path "~/.spacemacs.d/plantuml.jar")
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -54,7 +57,7 @@ This function should only modify configuration layer settings."
      ;; syntax-checking
      treemacs
      games
-     (osx :variables osx-use-option-as-meta nil)
+     osx 
      (erc :variables
           erc-server-list
           '(("irc.freenode.net"
@@ -486,8 +489,34 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (setq org-bullets-bullet-list '("◉" "◎" "⚫" "○" "►" "◇"))
+  (setq org-todo-keywords
+        '((sequence "TODO(t!)" "NEXT(n!)" "DOINGNOW(d!)" "BLOCKED(b!)"
+                    "TODELEGATE(g!)" "DELEGATED(D!)" "FOLLOWUP(f!)"
+                    "TICKLE(T!)" "|" "CANCELLED(c!)" "DONE(F!)")))
+  (setq org-todo-keyword-faces
+        '(("TODO" . org-warning)
+          ("NEXT" . "#008080")
+          ("DOINGNOW" . "#E35DBF")
+          ("CANCELED" . (:foreground "white" :background "#4d4d4d" :weight bold))
+          ("DELEGATED" . "pink")
+          ))
+  (with-eval-after-load 'org
+    (add-to-list 'org-export-backends 'md))
+
+  ;; define the refile targets
+  (defvar org-agenda-dir "" "gtd org files location")
+  (setq-default org-agenda-dir "~/Nutstore Files/org")
+  (setq org-agenda-file-note (expand-file-name "note.org" org-agenda-dir))
+  (setq org-agenda-file-gtd (expand-file-name "inbox.org" org-agenda-dir))
+  (setq org-agenda-file-journal (expand-file-name "diary.org" org-agenda-dir))
+  (setq org-default-notes-file (expand-file-name "inbox.org" org-agenda-dir))
+  (setq org-agenda-files (list org-agenda-dir))
+
   )
 
+(setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
+(load custom-file 'no-error 'no-message)
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (defun dotspacemacs/emacs-custom-settings ()
@@ -506,10 +535,4 @@ This function is called at the very end of Spacemacs initialization."
    (quote
     (solarized-theme monokai-theme yasnippet-snippets ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package treemacs-projectile treemacs-persp treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons reveal-in-osx-finder restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer osx-trash osx-dictionary osx-clipboard org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-bullets org-brain open-junk-file nameless move-text mmm-mode macrostep lorem-ipsum link-hint launchctl indent-guide hybrid-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot fuzzy font-lock+ flyspell-correct-helm flycheck-package flycheck-elsa flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu erc-yt erc-view-log erc-terminal-notifier erc-social-graph erc-image erc-hl-nicks elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish devdocs column-enforce-mode clean-aindent-mode centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
  '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 )
