@@ -32,7 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(graphviz
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -71,9 +71,16 @@ This function should only modify configuration layer settings."
           osx-dictionary-dictionary-choice "Simplified Chinese - English"
           osx-command-as 'super)
      (erc :variables
+          erc-enable-sasl-auth t
           erc-server-list
-          '(("irc.freenode.net"
+          '(
+            ;;("irc.freenode.net"
+            ;; :port "6697"
+            ;; :ssl t)
+            ("irc.libera.chat"
              :port "6697"
+             :nick "lijwxg"
+             :password "Leejw@2011"
              :ssl t)
              ))
      ;; version-control
